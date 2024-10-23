@@ -1,7 +1,0 @@
-flash
-rom
-obj
-.DS_Store
-.gitignore
-*.swp
-*/*.swp

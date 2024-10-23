@@ -1,0 +1,4 @@
+input bruji_pur.png
+dumppal bruji_pur_pal
+output bruji_pur_tiles
+tiles 0 0 5 4

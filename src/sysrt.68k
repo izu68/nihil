@@ -1,0 +1,60 @@
+; -----------------------------------------------------------------
+; Nihil - System Runtime
+; Contents :
+;		(First stage program init)
+;		Clear WRAM
+;		Copy initialized Non-Const Variables
+; Changes :
+;		Mon Oct 21 2024 15:11: Created file
+;		Wed Oct 23 2024 18:22: Leave a bit of WRAM for EVA
+; -----------------------------------------------------------------
+
+	section .text
+	global entry_point
+
+; ================= WRAM Clear ====================================
+
+WRAM_BASE = $FFFF0000
+WRAM_SIZE = $FFFFDF
+
+entry_point:
+	; Clear WRAM
+	lea	WRAM_BASE,a0
+	move.l	#(WRAM_SIZE),d7
+	moveq	#0,d0
+_clr_loop:
+	move.l	d0,(a0)+
+	move.l	d0,(a0)+
+	move.l	d0,(a0)+
+	move.l	d0,(a0)+
+	dbra	d7,_clr_loop
+
+; ================= Copy .data ====================================
+
+	lea	_stext,a0	; Data follows text section
+	lea	WRAM_BASE,a1  	; .data is at start of WRAM
+	move.w	#_sdata,d0
+	beq.s	no_data_cpy
+	lsr.w	#1,d0
+	subq.w	#1,d0
+_cpy_loop:
+	move.w	(a0)+,(a1)+
+	dbra	d0,_cpy_loop
+
+no_data_cpy:
+	moveq	#0,d0
+	move.l	d0,d1
+	move.l	d0,d2
+	move.l	d0,d3
+	move.l	d0,d4
+	move.l	d0,d5
+	move.l	d0,d6
+	move.l	d0,d7
+	move.l	d0,a0
+	move.l	d0,a1
+	move.l	d0,a2
+	move.l	d0,a3
+	move.l	d0,a4
+	move.l	d0,a5
+	move.l	d0,a6
+	jmp	(main).l

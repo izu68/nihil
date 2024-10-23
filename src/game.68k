@@ -1,0 +1,24 @@
+; -----------------------------------------------------------------
+; Nihil - Empty "GAME"
+; Contents :
+;		*
+; Changes :
+;		*
+; -----------------------------------------------------------------
+
+	section .text
+
+	global main
+
+; =================================================================
+
+main:
+	;jsr	vdp_reset
+	;jsr	vdp_clearmem
+
+	move.b	#$00, $A130F0		; Play something with EVA
+	move.b	#$01, $A13010
+	move.b	#$01, $A13013
+	move.b	#$FF, $A130F0
+_a:
+	jmp	_a

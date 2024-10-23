@@ -1,4 +1,6 @@
-.DS_Store
 flash
+rom
+obj
+.*
 *.swp
 */*.swp

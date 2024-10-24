@@ -15,12 +15,12 @@
 ; ================= WRAM Clear ====================================
 
 WRAM_BASE = $FFFF0000
-WRAM_SIZE = $FFFFDF
+WRAM_SIZE = $10000
 
 entry_point:
 	; Clear WRAM
 	lea	WRAM_BASE,a0
-	move.l	#(WRAM_SIZE),d7
+	move.w	#(WRAM_SIZE/(4*4))-1, d7
 	moveq	#0,d0
 _clr_loop:
 	move.l	d0,(a0)+

@@ -12,11 +12,14 @@
 
 	global bruji_tiles
 	global bruji_pal
+	global test_tilemap
 
+	section .rodata
 
-	section .data
-bruji_tiles:
-	incbin "bruji_pur_tiles"
 bruji_pal:
-	incbin "bruji_pur_pal"
+	incbin "bruji.pal"
+bruji_tiles:
+	incbin "bruji.gfx"
+test_tilemap:
+	dc.w %0000000000001101
 

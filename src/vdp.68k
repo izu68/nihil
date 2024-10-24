@@ -10,6 +10,8 @@
 ;		Wed Oct 32 2024 12:51: Added VRAM and CRAM subrtns
 ; -----------------------------------------------------------------
 
+	section .text
+
 	global vdp_reset
 	global vdp_clearmem
 	global vdp_write_vram_cpu_w
@@ -17,7 +19,6 @@
 	global vdp_write_cram_cpu
 	
 
-	section .text
 	include "vdpi.68k"
 
 ; ================= Reset VDP =====================================

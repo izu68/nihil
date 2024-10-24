@@ -46,7 +46,7 @@ $(OBJDIR)/%.o: %.68k
 $(TARGET): $(OBJS)
 	$(CC) -m68000 $(LDFLAGS) $(OBJS) -o $(TARGET)
 	$(OBJCOPY) -O binary $(TARGET) $(TARGET_ROM)
-	$(ROMFIX) $(TARGET_ROM)
+	#$(ROMFIX) $(TARGET_ROM)
 
 # clean
 clean:
@@ -57,5 +57,7 @@ run:
 	../maria/maria rom/nihil.bin
 runb:
 	/opt/toolchains/m68k-elf/emu/blastem rom/nihil.bin &> /dev/null &
+runm:
+	mame genesis -cart rom/nihil.bin -window -resolution 640x448 -debug -nofilter
 
-.PHONY: all clean run runb
+.PHONY: all clean run runb runm

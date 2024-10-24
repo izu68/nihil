@@ -58,6 +58,6 @@ run:
 runb:
 	/opt/toolchains/m68k-elf/emu/blastem rom/nihil.bin &> /dev/null &
 runm:
-	mame genesis -cart rom/nihil.bin -window -resolution 640x448 -debug -nofilter
+	mame genesis -cart rom/nihil.bin -window -resolution 640x480 -debug -nofilter
 
 .PHONY: all clean run runb runm

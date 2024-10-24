@@ -15,7 +15,7 @@
 ; ================= WRAM Clear ====================================
 
 WRAM_BASE = $FFFF0000
-WRAM_SIZE = $10000
+WRAM_SIZE = $FFDF
 
 entry_point:
 	; Clear WRAM

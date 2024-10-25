@@ -3,8 +3,6 @@
 ; Contents :
 ;		Reset Vectors
 ;		ROM Header
-; Changes :
-;		Sun Oct 20 2024 14:49: Created file
 ; -----------------------------------------------------------------
 
 	section .text.keepboot

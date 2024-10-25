@@ -15,7 +15,7 @@
 ; ================= WRAM Clear ====================================
 
 WRAM_BASE = $FFFF0000
-WRAM_SIZE = $FFDF
+WRAM_SIZE = $FFEF
 
 entry_point:
 	; Clear WRAM
@@ -28,6 +28,7 @@ _clr_loop:
 	move.l	d0,(a0)+
 	move.l	d0,(a0)+
 	dbra	d7,_clr_loop
+	;bra	no_data_cpy	; Ignore .data init, not using C
 
 ; ================= Copy .data ====================================
 

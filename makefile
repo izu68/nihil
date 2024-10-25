@@ -39,8 +39,8 @@ $(OBJDIR)/%.o: %.68k
 	$(AS) $(ASFLAGS) -o $@ $<
 
 # compile
-#$(OBJDIR)/%.o: %.c
-#	$(CC) $(CFLAGS) -o $@ $<
+$(OBJDIR)/%.o: %.c
+	$(CC) $(CFLAGS) -o $@ $<
 
 # link
 $(TARGET): $(OBJS)

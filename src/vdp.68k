@@ -5,9 +5,7 @@
 ;		VDP MEM clear subroutine
 ;		VDP MEM set macros
 ;		CPU VRAM copy subroutine
-; Changes :
-;		Mon Oct 21 2024 17:44: File created
-;		Wed Oct 32 2024 12:51: Added VRAM and CRAM subrtns
+;		Wait VBlank subroutine
 ; -----------------------------------------------------------------
 
 	section .text
@@ -17,6 +15,7 @@
 	global vdp_write_vram_cpu_w
 	global vdp_write_vram_cpu_l
 	global vdp_write_cram_cpu
+	global vdp_wait_vblank
 	
 
 	include "vdpi.68k"
@@ -37,7 +36,7 @@ vdp_reset:
     	move.w  #VDPREG_WINDOW|$00,(a0)   	; Window address
     	move.w  #VDPREG_HSCROLL|$3D,(a0)  	; HScroll address
     
-    	move.w  #VDPREG_SIZE|$01,(a0)     	; Tilemap size
+    	move.w  #VDPREG_SIZE|%00010001,(a0)     ; Tilemap size
     	move.w  #VDPREG_WINX|$00,(a0)     	; Window X split
     	move.w  #VDPREG_WINY|$00,(a0)     	; Window Y split
     	move.w  #VDPREG_INCR|$02,(a0)     	; Autoincrement
@@ -157,3 +156,13 @@ vdp_write_cram_cpu:
     	move.l  (a0)+, (a1)
     
     	rts
+
+; ================= Wait VBlank ==================================
+
+vdp_wait_vblank:                   	; Wait for next frame to start
+    	btst    #3, (VDPCTRL+1)
+    	beq.s   vdp_wait_vblank
+_vblank_wait_2:
+    	btst    #3, (VDPCTRL+1)
+    	bne.s   _vblank_wait_2
+	

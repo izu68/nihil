@@ -1,4 +1,0 @@
-input bruji.png
-dumppal bruji.pal
-output bruji.gfx
-tiles 0 0 5 4

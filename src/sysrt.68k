@@ -32,7 +32,7 @@ _clr_loop:
 	move.l	d0,(a0)+
 	move.l	d0,(a0)+
 	dbra	d7,_clr_loop
-	;bra	no_data_cpy	; Ignore .data init, not using C
+	;bra	no_data_cpy	; Ignore .data init if not using C
 
 ; ================= Copy .data ====================================
 
@@ -47,7 +47,7 @@ _cpy_loop:
 	dbra	d0,_cpy_loop
 
 no_data_cpy:
-	moveq	#0,d0
+	moveq	#0,d0		; Clear "main" registers
 	move.l	d0,d1
 	move.l	d0,d2
 	move.l	d0,d3
@@ -62,4 +62,4 @@ no_data_cpy:
 	move.l	d0,a4
 	move.l	d0,a5
 	move.l	d0,a6
-	jmp	(main).l
+	jmp	(main_asm).l

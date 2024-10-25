@@ -3,6 +3,7 @@
 ; Contents :
 ;		VDP reset subroutine
 ;		VDP MEM clear subroutine
+;		VDP enable/disable display
 ;		VDP MEM set macros
 ;		CPU VRAM copy subroutine
 ;		Wait VBlank subroutine
@@ -12,6 +13,8 @@
 
 	global vdp_reset
 	global vdp_clearmem
+	global vdp_enable_display
+	global vdp_disable_display
 	global vdp_write_vram_cpu_w
 	global vdp_write_vram_cpu_l
 	global vdp_write_cram_cpu
@@ -26,7 +29,7 @@ vdp_reset:
 	tst.w	(VDPCTRL)
 	lea	(VDPCTRL),a0
 	move.w  #VDPREG_MODE1|$04,(a0)		; Mode register #1
-    	move.w  #VDPREG_MODE2|$44,(a0)    	; Mode register #2
+    	move.w  #VDPREG_MODE2|$04,(a0)    	; Mode register #2
     	move.w  #VDPREG_MODE3|$00,(a0)    	; Mode register #3
     	move.w  #VDPREG_MODE4|$81,(a0)    	; Mode register #4
     
@@ -57,7 +60,7 @@ _clear_vram:
 	move.l	d0, (a1)
 	dbf	d1, _clear_vram
 
-	move.l	#VRAM_ADDR_CMD, (a0)	; Start clearing CRAM
+	move.l	#CRAM_ADDR_CMD, (a0)	; Start clearing CRAM
 	move.w	#(CRAM_SIZE/4)-1, d1
 _clear_cram:
 	move.l	d0, (a1)
@@ -94,6 +97,18 @@ m_vdp_set_cram_addr: macro addr
 m_vdp_set_vsram_addr: macro addr
 	m_mdp_set_addr_reg addr, VSRAM_ADDR_CMD
 	endm
+
+; ================= Enable/Disable display ========================
+
+vdp_enable_display:	
+	lea	(VDPCTRL),a0
+    	move.w  #VDPREG_MODE2|$44,(a0)    ; Enable display
+	rts
+
+vdp_disable_display:	
+	lea	(VDPCTRL),a0
+    	move.w  #VDPREG_MODE2|$04,(a0)    ; Disable display
+	rts
 
 ; ================= CPU VRAM copy (words) =========================
 ; Use M68K to copy words from ptr to VRAM address

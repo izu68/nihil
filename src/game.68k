@@ -7,13 +7,13 @@
 ; -----------------------------------------------------------------
 
 	section .text
-	global main
+	global main_asm
 
 	include "vdpi.68k"		; Need VDPCTRL for VBL
 
 ; =================================================================
 
-main:
+main_asm:
 	jsr	vdp_reset
 	jsr	vdp_clearmem
 
@@ -37,11 +37,5 @@ main:
 	jsr vdp_write_vram_cpu_w
 
 _a:
-_vblank_wait_1:                   	; Wait for next frame to start
-    	btst    #3, (VDPCTRL+1)
-    	beq.s   _vblank_wait_1
-_vblank_wait_2:
-    	btst    #3, (VDPCTRL+1)
-    	bne.s   _vblank_wait_2
-	
+	jsr vdp_wait_vblank	
 	jmp	_a

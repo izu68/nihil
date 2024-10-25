@@ -29,15 +29,15 @@ vdp_reset:
 	tst.w	(VDPCTRL)
 	lea	(VDPCTRL),a0
 	move.w  #VDPREG_MODE1|$04,(a0)		; Mode register #1
-    	move.w  #VDPREG_MODE2|$04,(a0)    	; Mode register #2
+    	move.w  #VDPREG_MODE2|$74,(a0)    	; Mode register #2
     	move.w  #VDPREG_MODE3|$00,(a0)    	; Mode register #3
     	move.w  #VDPREG_MODE4|$81,(a0)    	; Mode register #4
     
-    	move.w  #VDPREG_PLANEA|$78,(a0)   	; Plane A address (F000)
-    	move.w  #VDPREG_PLANEB|$70,(a0)   	; Plane B address (E000)
-    	move.w  #VDPREG_SPRITE|$6C,(a0)   	; Sprite address  (D800)
-    	move.w  #VDPREG_WINDOW|$68,(a0)   	; Window address  (D000)
-    	move.w  #VDPREG_HSCROLL|$64,(a0)  	; HScroll address (C800)
+    	move.w  #VDPREG_PLANEA|$38,(a0)   	; (E000 / 400)
+    	move.w  #VDPREG_PLANEB|$06,(a0)   	; (C000 / 2000)
+    	move.w  #VDPREG_SPRITE|$7A,(a0)   	; (F400 / 200)
+    	move.w  #VDPREG_WINDOW|$34,(a0)   	; (D000 / 400)
+    	move.w  #VDPREG_HSCROLL|$3C,(a0)  	; (F000 / 400)
     
     	move.w  #VDPREG_SIZE|%00010001,(a0)     ; Tilemap size
     	move.w  #VDPREG_WINX|$00,(a0)     	; Window X split

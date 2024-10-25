@@ -7,20 +7,16 @@
 ; -----------------------------------------------------------------
 
 	section .text
-	global main_asm
+	global main
 
 	include "vdpi.68k"		; Need VDPCTRL for VBL
 
 ; =================================================================
 
-main_asm:
+main:
 	jsr	vdp_reset
 	jsr	vdp_clearmem
 
-	move.b	#$00, $A130F0		; Play something with EVA
-	move.b	#$01, $A13010
-	move.b	#$01, $A13013
-	move.b	#$FF, $A130F0
 
 	move.b	#0, d0
 	lea	bruji_pal, a0
@@ -29,13 +25,17 @@ main_asm:
 	move.w	#$0000, d0
 	move.w	#160, d1
 	lea	bruji_tiles, a0
-	jsr vdp_write_vram_cpu_l
+	jsr 	vdp_write_vram_cpu_l
 
-	move.w	#$E020, d0
+	move.w	#$C000, d0		; Write random tile to BGB
 	move.w	#1, d1
 	lea	test_tilemap, a0
-	jsr vdp_write_vram_cpu_w
-
+	jsr 	vdp_write_vram_cpu_w
+	
+	;move.b	#$00, $A130F0		; Play something with EVA
+	;move.b	#$01, $A13010
+	;move.b	#$01, $A13013
+	;move.b	#$FF, $A130F0
 _a:
 	jsr vdp_wait_vblank	
 	jmp	_a

@@ -11,7 +11,7 @@
 	
 	org $000000
 
-	dc.l $FFFFD0 		; Initial stack pointer
+	dc.l $FFFFE0 		; Initial stack pointer
 	dc.l entry_point	; Reset vector
 	dc.l dummy_error_handl	; Error handle dummy
 	dc.l dummy_error_handl	; Error handle dummy

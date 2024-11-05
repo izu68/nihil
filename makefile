@@ -1,7 +1,6 @@
 AS = vasmm68k_psi-x
 CC = m68k-elf-gcc
 OBJCOPY = m68k-elf-objcopy
-ROMFIX = ./tools/romfix
 
 OBJDIR = obj
 INCDIR = inc
@@ -46,7 +45,6 @@ $(OBJDIR)/%.o: %.c
 $(TARGET): $(OBJS)
 	$(CC) -m68000 $(LDFLAGS) $(OBJS) -o $(TARGET)
 	$(OBJCOPY) -O binary $(TARGET) $(TARGET_ROM)
-	#$(ROMFIX) $(TARGET_ROM)
 
 # clean
 clean:

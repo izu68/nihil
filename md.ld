@@ -17,9 +17,9 @@ SECTIONS
 	{
 		KEEP(*(.text.keepboot)) *(.text .text.*)
 		. = ALIGN(0x2);
+		*lorom.o(.text)
 		*sysrt.o(.text)
 		*vdp.o(.text)
-      	  	*main.o(.text) 
 		_etext = .;
 		. = ALIGN(0x2);
 		*(.rodata .rodata.*)

@@ -13,6 +13,7 @@ The runtime process is as follows:
 ### Toolchain
 
 Assembler: `vasm-psi-x`, a version of vasm that tries to mimic asm68k's syntax. Essentially like using the old asm68k but can produce ELF objects. This is maintained by NaotoNTP, go check his GitHub.
+
 Compiler: `m68k-elf-gcc`, the GNU C Compiler targeted towards m68k. Maintained by andwn, check his repo as well.
 
 When you have these tools installed, make sure to add them to your PATH. The makefile expects to call them from anywhere.

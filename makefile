@@ -31,7 +31,7 @@ all: $(OBJDIR) $(TARGET)
 
 # create build directory if it doesn't exist
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
+	mkdir -p obj/src obj/gfx rom
 
 # assemble
 $(OBJDIR)/%.o: %.68k
@@ -49,7 +49,6 @@ $(TARGET): $(OBJS)
 # clean
 clean:
 	rm -rf $(OBJDIR)
-	mkdir -p obj/src obj/gfx
 
 run:
 	../maria/maria rom/nihil.bin

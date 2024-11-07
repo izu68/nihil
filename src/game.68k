@@ -12,28 +12,9 @@
 ; =================================================================
 
 main_asm:
-	jsr	vdp_reset
-	jsr	vdp_clearmem
+	bsr	vdp_reset
+	bsr	vdp_clearmem
 
-
-	move.b	#0, d0
-	lea	bruji_pal, a0
-	jsr	vdp_write_cram_cpu
-
-	move.w	#$0000, d0		; Write tileset to $0000
-	move.w	#160, d1
-	lea	bruji_tiles, a0
-	jsr 	vdp_write_vram_cpu_l
-
-	move.w	#$C000, d0		; Write tilemap to BGB
-	move.w	#20, d1
-	lea	bruji_tilemap, a0
-	jsr 	vdp_write_vram_cpu_w
-	
-	move.b	#$00, $A130F0		; Play something with EVA
-	move.b	#$01, $A13070
-	move.b	#$02, $A13073
-	move.b	#$FF, $A130F0
-_a:
-	jsr vdp_wait_vblank	
-	jmp	_a
+loop:
+	bsr vdp_wait_vblank	
+	bra	loop

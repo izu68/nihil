@@ -14,9 +14,24 @@
 ; ================= WRAM Clear & TMSS Disable =====================
 
 WRAM_BASE = $FFFF0000
-WRAM_SIZE = $FFEF
+WRAM_SIZE = $FFFF
 
 entry_point:
+	move.b	(HWVERSION), d7	; Disable TMSS if needed
+	and.b   #$0F, d7
+    	beq.s   _no_tmss
+    	move.l  #'SEGA', (TMSSPORT)
+_no_tmss:
+
+	lea	WRAM_BASE,a0	; Clear WRAM
+	move.w	#(WRAM_SIZE/(4*4))-1, d7
+	moveq	#0,d0
+_clr_loop:
+	move.l	d0,(a0)+
+	move.l	d0,(a0)+
+	move.l	d0,(a0)+
+	move.l	d0,(a0)+
+	dbra	d7,_clr_loop
 
 ; ================= Copy .data ====================================
 

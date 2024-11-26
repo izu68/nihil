@@ -6,7 +6,7 @@
 ;		Sun Oct 20 2024 14:52: Created file
 ; -----------------------------------------------------------------
 
-	global dummy_error_handl
+	global ignore_handler
 
-dummy_error_handl:
-	jmp	dummy_error_handl
+ignore_handler:
+	rts

@@ -1,18 +1,12 @@
-int main ( void )
+#include "nihil.h"
+
+int main (void)
 {
-	// Reset vdp and clear VRAM, CRAM and VSRAM
-	__asm__ volatile
-	(
-		"bsr	vdp_reset\n"
-		"bsr	vdp_clearmem"
-	);
+	c_vdp_reset ();
+	c_vdp_clear_mem ();
 	
-	while ( 1 )
+	while (1)
 	{
-		// Wait for vblank
-		__asm__ volatile
-		(
-		"bsr	vdp_wait_vblank"
-		);
+		c_vdp_wait_vblank ();
 	}
 }

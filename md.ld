@@ -15,11 +15,13 @@ SECTIONS
 {
 	.text 0x00000000 :
 	{
-		KEEP(*(.text.keepboot)) *(.text .text.*)
+		KEEP(*(.text.lorom)) *(.text .text.*)
 		. = ALIGN(0x2);
 		*lorom.o(.text)
 		*sysrt.o(.text)
 		*vdp.o(.text)
+		*dma.o(.text)
+		*main.o(.text)
 		_etext = .;
 		. = ALIGN(0x2);
 		*(.rodata .rodata.*)

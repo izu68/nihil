@@ -61,6 +61,6 @@ no_data_cpy:
 	move.l	d0,a4
 	move.l	d0,a5
 	move.l	d0,a6
-	bra	main_asm
+	bra	main
 _return_trap:
 	bra	_return_trap

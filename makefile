@@ -51,6 +51,6 @@ clean:
 	rm -rf $(OBJDIR)
 
 run:
-	../maria/maria rom/nihil.bin
+	../blastem/blastem rom/nihil.bin
 
 .PHONY: all clean run runb runm

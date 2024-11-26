@@ -12,16 +12,17 @@
 	section .text
 
 	global vdp_reset
-	global vdp_clearmem
+	global vdp_clear_mem
 	global vdp_enable_display
 	global vdp_disable_display
-	global vdp_write_vram_cpu_w
+	global vdp_write_vram_cpu
 	global vdp_write_vram_cpu_l
 	global vdp_write_cram_cpu
 	global vdp_wait_vblank
 	
 
 	include "vdpi.68k"
+
 
 ; ================= Reset VDP =====================================
 
@@ -47,9 +48,10 @@ vdp_reset:
     	move.w  #VDPREG_HRATE|$FF,(a0)    	; HBlank IRQ rate
 	rts
 
+
 ; ================= Clear MEM =====================================
 
-vdp_clearmem:
+vdp_clear_mem:
 	moveq	#0, d0			; To fill with zeros
 	lea	(VDPCTRL), a0
 	lea	(VDPDATA), a1
@@ -72,6 +74,7 @@ _clear_vsram:
     	move.l  d0, (a1)
     	dbf     d1, _clear_vsram
 	rts
+
 
 ; ================= Set MEM Addr macros ===========================
 ; VDP *MEM addr encoding :
@@ -98,6 +101,7 @@ m_vdp_set_vsram_addr: macro addr
 	m_mdp_set_addr_reg addr, VSRAM_ADDR_CMD
 	endm
 
+
 ; ================= Enable/Disable display ========================
 
 vdp_enable_display:	
@@ -110,6 +114,7 @@ vdp_disable_display:
     	move.w  #VDPREG_MODE2|$04,(a0)    ; Disable display
 	rts
 
+
 ; ================= CPU VRAM copy (words) =========================
 ; Use M68K to copy words from ptr to VRAM address
 ; Args :
@@ -117,7 +122,7 @@ vdp_disable_display:
 ;		D1.W : number of words to copy
 ;		A0.L : pointer to data
 
-vdp_write_vram_cpu_w:
+vdp_write_vram_cpu:
 	m_vdp_set_vram_addr d0		; Where we'll copy
 	
 	subq.w	#1, d1			; DBF stops at -1
@@ -129,6 +134,7 @@ _copy_vram_w:
 
 _done_copy_vram_w:
 	rts	
+
 
 ; ================= CPU VRAM copy (longs) =========================
 ; Use M68K to copy longs from ptr to VRAM address
@@ -149,6 +155,7 @@ _copy_vram_l:
 
 _done_copy_vram_l:
 	rts
+
 
 ; ================= CPU CRAM copy ================================
 ; Use M68K to copy palettes to CRAM
@@ -172,14 +179,15 @@ vdp_write_cram_cpu:
     
     	rts
 
+
 ; ================= Wait VBlank ==================================
 
-vdp_wait_vblank:                   	; Wait for next frame to start
-_vblank_wait_1:                   	; Wait for next frame to start
+vdp_wait_vblank:
+_vbl_enter_retrace:
     	btst    #3, (VDPCTRL+1)
-    	beq.s   _vblank_wait_1
-_vblank_wait_2:
+    	beq.s   _vbl_enter_retrace	; Wait here until we enter VBlank
+_vbl_exit_retrace:
     	btst    #3, (VDPCTRL+1)
-    	bne.s   _vblank_wait_2
+    	bne.s   _vbl_exit_retrace	; Wait here until we're out of VBlank
 	
 	rts

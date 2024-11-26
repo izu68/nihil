@@ -1,0 +1,58 @@
+; -----------------------------------------------------------------
+; Night Hexen - DMA Ops
+; -----------------------------------------------------------------
+
+	section .text
+	include "vdpi.68k"
+	global vdp_issue_dma
+
+; ================= Prepare DMA Transfer ==========================
+; D0 = Length
+; D1 = Dest addr
+; A0 = Source addr (Goes into D7 -> SP)
+
+vdp_issue_dma:
+	lsr.w   #1, d0
+    
+	move.l  a0, d7
+	lsr.l   #1, d7
+	and.l   #$7FFFFF, d7
+
+	lea     (VDPCTRL), a0
+    	lea     -10(sp), sp
+    
+    	move.l  sp, a6
+    	move.l  #(VDPREG_DMALEN_H<<16)|VDPREG_DMALEN_L, (a6)+
+    	move.l  #(VDPREG_DMASRC_H<<16)|VDPREG_DMASRC_M, (a6)+
+    	move.w	#VDPREG_DMASRC_L, (a6)+
+    
+    	movep.l d7, -7(a6)
+    	movep.w d0, -9(a6)
+    
+    	move.l	(sp)+, (a0)
+    	move.l  (sp)+, (a0)
+    	move.w  (sp)+, (a0)
+
+; ================= Execute DMA Transfer ==========================
+; D1 = Dest addr
+; A0 = VdpCtrl
+
+    	; Convert destination address
+    	; into the VDP command
+    	and.l   #$FFFF, d1
+    	lsl.l   #2, d1
+    	lsr.w   #2, d1
+    	swap    d1
+    	or.l    #VRAM_DMA_CMD, d1
+    
+    	; Start the transfer
+    	move.l  d1, -(sp)
+
+    	; FastPauseZ80 <- Not using Z80 for now
+
+    	move.w  (sp)+, (a0)
+    	move.w  (sp)+, (a0)
+
+    	; ResumeZ80 <- Not using Z80 for now
+
+	rts

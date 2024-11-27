@@ -7,7 +7,7 @@ extern void vdp_reset (void);
 extern void vdp_clear_mem (void);
 extern void vdp_wait_vblank (void);
 
-void c_vdp_write_vram_cpu_w ( word vram_addr, word words_num, void* data_ptr )
+void c_vdp_write_vram_cpu_w (u16 vram_addr, u16 words_num, void* data_ptr)
 {
 	__asm__ volatile
 	(
@@ -21,7 +21,7 @@ void c_vdp_write_vram_cpu_w ( word vram_addr, word words_num, void* data_ptr )
 	);
 }
 
-void c_vdp_write_vram_cpu_l ( word vram_addr, word longs_num, void* data_ptr )
+void c_vdp_write_vram_cpu_l (u16 vram_addr, u16 longs_num, void* data_ptr)
 {
 	__asm__ volatile
 	(
@@ -35,7 +35,7 @@ void c_vdp_write_vram_cpu_l ( word vram_addr, word longs_num, void* data_ptr )
 	);
 }
 
-void c_vdp_write_cram_cpu ( byte pal_num, void* data_ptr ) 
+void c_vdp_write_cram_cpu (u8 pal_num, void* data_ptr) 
 {
     	__asm__ volatile 
 	(
@@ -48,7 +48,7 @@ void c_vdp_write_cram_cpu ( byte pal_num, void* data_ptr )
     	);
 }
 
-void c_vdp_issue_dma (word length, word dest, void* source)
+void c_vdp_issue_dma (u16 length, u16 dest, void* source)
 {
 	__asm__ volatile
 	(

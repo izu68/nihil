@@ -1,0 +1,30 @@
+; -----------------------------------------------------------------
+; Nihil - KDebug
+; Contents :
+;		*
+; Changes :
+;		*
+; -----------------------------------------------------------------
+
+	section .text
+	global kdebug_alert
+
+; ================= Print string ==================================
+; Note: String must be NULL terminated!!!
+;		A0 = Pointer to string
+
+kdebug_alert:
+    	move.w  #0x9E00, d0		; Ficticious VDP location
+    	move.b  (a0)+, d0		; String byte per byte write to port #0x1E
+    	beq.s   out			; Skip if string size is zero
+    	movea.l #0xC00004, a1
+
+recurse:
+    	move.w  d0, (a1)
+    	move.b  (a0)+, d0
+    	bne.s   recurse
+
+    	move.w  d0, (a1)		; End session writing 0 at #0x1E
+out:
+    	rts
+

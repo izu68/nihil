@@ -3,12 +3,12 @@
 
 #include <stdint.h>
 
-#define byte	uint8_t
-#define word	uint16_t
-#define lword	uint32_t
+#define u8	uint8_t
+#define u16	uint16_t
+#define u32	uint32_t
 
-#define vbyte	volatile byte
-#define vword	volatile word
-#define vlword	volatile lword
+#define vu8	volatile u8
+#define vu16	volatile u16
+#define vu32	volatile u32
 
 #endif

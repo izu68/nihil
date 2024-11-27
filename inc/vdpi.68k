@@ -39,11 +39,15 @@ VDPREG_DMASRC_L = $9500  	; DMA source (low)
 VDPREG_DMASRC_M = $9600  	; DMA source (mid)
 VDPREG_DMASRC_H = $9700  	; DMA source (high)
 
-; ================= VDP memory locations ==========================
+; ================= VDP acess commands ============================
 
 VRAM_ADDR_CMD = $40000000
 CRAM_ADDR_CMD = $C0000000
 VSRAM_ADDR_CMD = $40000010
+
+VRAM_DMA_CMD:   equ $40000080
+CRAM_DMA_CMD:   equ $C0000080
+VSRAM_DMA_CMD:  equ $40000090
 
 ; ================= VDP memory sizes ==============================
 

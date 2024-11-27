@@ -7,7 +7,7 @@
 	global vdp_issue_dma
 
 ; ================= Prepare DMA Transfer ==========================
-; D0 = Length
+; D0 = Length (bytes)
 ; D1 = Dest addr
 ; A0 = Source addr (Goes into D7 -> SP)
 
